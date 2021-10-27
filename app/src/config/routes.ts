@@ -1,6 +1,9 @@
 const userRoutes = {
    create: '/user',
-   get: '/login'
+   get: '/login',
+   update: function(user_id: string) {
+      return `/users/${user_id}`;
+   }
 };
 
 const reservationsRoutes = {
@@ -18,4 +21,6 @@ const routes = {
    reservation: reservationsRoutes
 };
 
-export { routes };
+const baseURL = 'http://localhost:3333';
+
+export { routes, baseURL };

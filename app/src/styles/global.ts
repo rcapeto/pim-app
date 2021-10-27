@@ -7,4 +7,10 @@ const colors = {
    green: '#2FD658'
 };
 
-export { colors };
+const fonts = {
+   regular: 'font_regular',
+   medium: 'font_medium',
+   bold: 'font_bold'
+}
+
+export { colors, fonts };

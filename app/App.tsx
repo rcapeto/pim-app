@@ -1,21 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import AppLoading from 'expo-app-loading';
+import { StatusBar } from 'expo-status-bar';
+import { 
+   Montserrat_400Regular,
+   Montserrat_700Bold,
+   Montserrat_500Medium
+} from '@expo-google-fonts/montserrat';
+import { useFonts } from 'expo-font';
+
+import { AppContextProvider } from './src/contexts/app';
+import { ApiContextProvider } from './src/contexts/api';
+import { Routes } from './src/routes';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+   const [fontsLoaded] = useFonts({
+      font_regular: Montserrat_400Regular,
+      font_medium: Montserrat_500Medium,
+      font_bold: Montserrat_700Bold
+   });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+   if(!fontsLoaded) return <AppLoading />
+
+   return(
+      <AppContextProvider>
+         <ApiContextProvider>
+            <StatusBar backgroundColor="#000" style="dark"/>
+            <Routes />
+         </ApiContextProvider>
+      </AppContextProvider>
+   );
+}
