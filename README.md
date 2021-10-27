@@ -23,7 +23,6 @@ Para iniciá-lo, siga os passos abaixo:
 $ yarn
 # Iniciar o projeto (backend)
 $ yarn dev
-
 # Iniciar o projeto (app)
 $ yarn start
 ```

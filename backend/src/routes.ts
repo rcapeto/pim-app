@@ -8,8 +8,6 @@ import ReservationController from './controllers/ReservationController';
 const route = Router();
 const upload = multer(uploadConfig);
 
-route.get('');
-
 route.post('/user', upload.array('image'), UserController.create);
 route.delete('/user/:id', UserController.delete);
 route.get('/users', UserController.index);
