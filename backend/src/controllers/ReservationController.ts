@@ -140,12 +140,24 @@ export default {
       const reservation = await findReservationWithId(id);
 
       if(reservation) {
-         await reservationRepo.delete(reservation);
+         try {
+            await reservationRepo.delete(reservation);
 
-         return response.status(200).json({
-            errors: [],
-            message: 'Reservation deleted with success! 😉'
-         });
+            return response.status(200).json({
+               errors: [],
+               message: 'Reservation deleted with success! 😉'
+            });
+         } catch(error) {
+            showError(error, 'Error[deleteReservation]');
+            return response.status(404).json({
+               errors: [
+                  {
+                     message: `Error delete reservation`
+                  }
+               ],
+               message: 'System error [db]'
+            }); 
+         }
       } else {
          return response.status(404).json({
             errors: [

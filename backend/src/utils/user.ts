@@ -18,3 +18,19 @@ export const getUserWithCPF = async (cpf: string) => {
       return null;
    }
 };
+
+export const getUserWithId = async (id: string) => {
+   const userRepo = getRepository(UserModel);
+
+   try {
+      const user = await userRepo.findOne({
+         where: `id == '${id}'`
+      });
+
+      return user;
+
+   } catch(error) {
+      showError(error, `Error[getUserWithCPF]`);
+      return null;
+   }
+};

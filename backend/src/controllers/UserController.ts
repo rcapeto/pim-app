@@ -5,7 +5,7 @@ import { v4 as createCrypt } from 'uuid';
 import UserModel from '../models/User';
 import { Error } from '../../@types';
 import { showError, removeMask } from '../utils';
-import { getUserWithCPF } from '../utils/user';
+import { getUserWithCPF, getUserWithId } from '../utils/user';
 import { renderUser } from '../view/user';
 
 export default {
@@ -65,7 +65,7 @@ export default {
          name,
          birth_date,
          cpf: removeMask(cpf),
-         credit_card: JSON.stringify(credit_card),
+         credit_card,
       }
 
       const userRepo = getRepository(UserModel);
@@ -158,5 +158,82 @@ export default {
       user && await userRepo.delete(user);
 
       return res.json('remove');
+   },
+   async update(request: Request, response: Response) {
+      const { id } = request.params;
+      const userRepo = getRepository(UserModel);
+      
+      if(!id) {
+         return response.status(401).json({
+            errors: [
+               {
+                  message: 'Dont have access'
+               }
+            ],
+            message: 'Fail to update user data'
+         });
+      }
+
+      const user = await getUserWithId(id);
+
+      if(user) {
+         const images = request.files as Express.Multer.File[];
+         const image = images.length ? images[0].filename : '';
+
+         const {
+            password,
+            cellphone,
+            email,
+            name,
+            birth_date,
+            cpf,
+            credit_card,
+         } = request.body;
+
+         const data = {
+            ...user,
+            id,
+            password,
+            cellphone: removeMask(cellphone),
+            image,
+            email,
+            name,
+            birth_date,
+            cpf: removeMask(cpf),
+            credit_card,
+         }
+
+         try {
+            await userRepo.update(user, data);
+
+            return response.status(200).json({
+               errors: [],
+               message: 'User updated with success! 😉',
+               data: {
+                  user
+               }
+            });
+         } catch(error) {
+            showError(error, 'Error[deleteReservation]');
+            return response.status(404).json({
+               errors: [
+                  {
+                     message: `Error update user`
+                  }
+               ],
+               message: 'System error [db]'
+            }); 
+         }
+      } else {
+         return response.status(404).json({
+            errors: [
+               {
+                  message: `Don't find user`,
+                  id
+               }
+            ],
+            message: `Don't find user with ${id}`
+         });
+      }
    }
 };

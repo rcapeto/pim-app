@@ -1,11 +1,9 @@
-import { UserDB, User } from '../../@types';
+import { UserDB } from '../../@types';
 
-export const renderUser = (user: UserDB): User => {
+export const renderUser = (user: UserDB): UserDB => {
    const { 
       name, cpf, email, birth_date, cellphone, credit_card, id, image
    } = user;
-
-   const creditCard = JSON.parse(credit_card);
 
    return {
       password: '',
@@ -16,10 +14,6 @@ export const renderUser = (user: UserDB): User => {
       cellphone,
       id,
       image: `/uploads/${image}`,
-      credit_card: {
-         number: creditCard.number,
-         cvv: creditCard.cvv,
-         date: creditCard.date
-      }
+      credit_card,
    }
 }
