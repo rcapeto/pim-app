@@ -9,4 +9,5 @@ export interface AppContextValue extends AppContextState {
 
 export interface ApiContextValue extends ApiContextState {
    login: (email: string, password: string) => Promise<void>;
+   toggleLoadingApi: () => void;
 };

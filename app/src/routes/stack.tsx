@@ -1,16 +1,22 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Login } from '../pages/Login';
+import { StackHeader } from '../components/StackHeader';
+
+import LoginRoutes from './login.routes';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
 export function StackRoutes() {
    return(
-      <Navigator>
+      <Navigator
+         screenOptions={{ 
+            headerShown: false
+         }}
+      >
          <Screen 
-            name="login"
-            component={Login}
+            name="LoginRoutes"
+            component={LoginRoutes}
          />
       </Navigator>
    );

@@ -33,7 +33,8 @@ export const ApiContextProvider: FunctionComponent = ({
       <ApiContext.Provider
          value={{
             ...apiState,
-            login
+            toggleLoadingApi,
+            login,
          }}
       >
          { children }
