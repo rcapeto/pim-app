@@ -24,7 +24,7 @@ import styles from './styles';
 
 export function Login() {
    const [errorMessage, setErrorMessage] = useState('');
-   const [data, setData] = useState({ email: 'admin@admin.com.br', password: '123456' });
+   const [data, setData] = useState({ email: 'admin@admin.com.br', password: 'admin' });
 
    const { login, loadingAPI } = useAPI();
    const { handleSetUser } = useApp();

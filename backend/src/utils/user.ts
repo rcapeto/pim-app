@@ -3,34 +3,35 @@ import { getRepository } from 'typeorm';
 import UserModel from '../models/User';
 import { showError } from './index';
 
-export const getUserWithCPF = async (cpf: string) => {
+type SearchType = 'cpf' | 'email' | 'id';
+
+export const getUserInDB = async (type: SearchType, value: string) => {
    const userRepo = getRepository(UserModel);
+   let fieldName = '';
 
-   try {
-      const user = await userRepo.findOne({
-         where: `cpf == '${cpf}'`
-      });
-
-      return user;
-
-   } catch(error) {
-      showError(error, `Error[getUserWithCPF]`);
-      return null;
+   switch(type) {
+      case 'cpf':
+         fieldName = 'cpf';
+         break;
+      case 'email':
+         fieldName = 'email';
+         break;
+      case 'id':
+         fieldName = 'id';
+         break;
+      default:
+         fieldName = ''
    }
-};
-
-export const getUserWithId = async (id: string) => {
-   const userRepo = getRepository(UserModel);
 
    try {
       const user = await userRepo.findOne({
-         where: `id == '${id}'`
+         where: `${fieldName} == '${value}'`
       });
 
       return user;
 
    } catch(error) {
-      showError(error, `Error[getUserWithCPF]`);
+      showError(error, `Error[getUserInDB]`);
       return null;
    }
 };

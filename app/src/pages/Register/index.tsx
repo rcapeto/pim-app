@@ -26,12 +26,12 @@ import { system_name } from '../../config/system';
 import { inputMask } from '../../utils';
 
 const initialFormData = {
-   password: '123456',
-   cellphone: '(11)998979-8773',
-   email: 'kelly@email.com',
-   name: 'Kelly',
-   birth_date: '13/11/1975',
-   cpf: '157.428.918-10',
+   password: '',
+   cellphone: '',
+   email: '',
+   name: '',
+   birth_date: '',
+   cpf: '',
 };
 
 export function Register() {

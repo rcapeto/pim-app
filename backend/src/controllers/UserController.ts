@@ -5,7 +5,7 @@ import { v4 as createCrypt } from 'uuid';
 import UserModel from '../models/User';
 import { Error } from '../../@types';
 import { showError, removeMask } from '../utils';
-import { getUserWithCPF, getUserWithId } from '../utils/user';
+import { getUserInDB } from '../utils/user';
 import { renderUser } from '../view/user';
 
 export default {
@@ -37,9 +37,10 @@ export default {
          credit_card,
       } = request.body;
 
-      const hasUser = await getUserWithCPF(removeMask(cpf));
+      const hasUserCpf = await getUserInDB('cpf', removeMask(cpf));
+      const hasUserEmail = await getUserInDB('email', email);
 
-      if(hasUser) {
+      if(hasUserCpf || hasUserEmail) {
          errors.push({
             field: '',
             message: 'E-mail has already using'
@@ -134,6 +135,8 @@ export default {
             });
          }
 
+         console.log(user);
+
          if(user && user.password !== password || !user) {
             return response.json({ 
                message: 'E-mail or Password incorrect!', 
@@ -182,7 +185,7 @@ export default {
          });
       }
 
-      const user = await getUserWithId(id);
+      const user = await getUserInDB('id', id);
 
       if(user) {
          const images = request.files as Express.Multer.File[];
