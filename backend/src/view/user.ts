@@ -1,4 +1,5 @@
 import { UserDB } from '../../@types';
+import { base_url } from '../config/server';
 
 export const renderUser = (user: UserDB): UserDB => {
    const { 
@@ -13,7 +14,7 @@ export const renderUser = (user: UserDB): UserDB => {
       birth_date,
       cellphone,
       id,
-      image: `/uploads/${image}`,
+      image: `${base_url}/uploads/${image}`,
       credit_card,
    }
 }

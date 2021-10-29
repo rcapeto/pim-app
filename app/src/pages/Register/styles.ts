@@ -1,10 +1,11 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { colors, fonts } from '../../styles/global';
 
 const styles = StyleSheet.create({
    container: {
       flex: 1,
+      backgroundColor: colors.white
    },
    content: {
       padding: 20,
@@ -36,6 +37,11 @@ const styles = StyleSheet.create({
       borderColor: colors.gray,
       alignItems: 'center',
       justifyContent: 'center'
+   },
+   image: {
+      width: '100%',
+      height: '100%',
+      borderRadius: 70
    },
    plus: {
       width: 30,

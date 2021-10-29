@@ -7,19 +7,28 @@ import {
    TouchableWithoutFeedback,
    Keyboard,
    KeyboardAvoidingView,
-   Platform
+   Platform,
+   ActivityIndicator,
+   Alert
 } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 
 import { useAPI } from '../../contexts/api';
+import { useApp } from '../../contexts/app';
 import { CustomInput } from '../../components/Input';
+import { useForm } from '../../hooks/useForm';
+import { system_name } from '../../config/system';
+import { colors } from '../../styles/global';
 
 import styles from './styles';
 
-export function Login(props: any) {
+export function Login() {
    const [errorMessage, setErrorMessage] = useState('');
+   const [data, setData] = useState({ email: 'admin@admin.com.br', password: '123456' });
 
-   const {} = useAPI();
+   const { login, loadingAPI } = useAPI();
+   const { handleSetUser } = useApp();
+   const { checkFields  } = useForm();
    const navigation = useNavigation();
 
    const handleNavigateToRegister = () => {
@@ -27,10 +36,26 @@ export function Login(props: any) {
          CommonActions.navigate({
             name: 'Register',
          })
-      )
+      );
    };
 
-   const handleLogin = async () => {};
+   const handleLogin = async () => {
+      const { message, hasEmptyFields } = checkFields(data);
+
+      if(hasEmptyFields) {
+         return Alert.alert(system_name, message);
+      }
+      const { email, password } = data;
+      const { user, message: messageAPI } = await login(email, password);
+
+      if(!user) {
+         return setErrorMessage(messageAPI);
+      }
+      user && handleSetUser({
+         ...user,
+         credit_card: JSON.parse(user.credit_card)
+      });
+   }
 
    return(
       <SafeAreaView style={styles.container}>
@@ -56,12 +81,18 @@ export function Login(props: any) {
                         keyboardType="email-address"
                         returnKeyType="done"
                         textContentType="emailAddress"
+                        value={data.email}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        onChangeText={text => setData({...data, email: text })}
                      />
                       <CustomInput 
                         label="Senha"
                         secureTextEntry={true}
                         returnKeyType="done"
                         textContentType="password"
+                        value={data.password}
+                        onChangeText={text => setData({...data, password: text })}
                      />
 
                      {
@@ -77,7 +108,17 @@ export function Login(props: any) {
                            onPress={handleLogin}
                            activeOpacity={.8}
                         >
-                           <Text style={styles.buttonText}>Entrar</Text>
+                           {
+                              loadingAPI ? (
+                                 <ActivityIndicator 
+                                    color={colors.white}
+                                    size={20}
+                                 />
+                              ) : (
+                                 <Text style={styles.buttonText}>Entrar</Text>
+                              )
+                           }
+                           
                         </TouchableOpacity>
                      </View>
 

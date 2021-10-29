@@ -51,6 +51,8 @@ export interface UserDB {
    credit_card: string;
 };
 
+export type UserCreate = Partial<UserDB>;
+
 export interface ReservationResponse {
    reservation: Reservation;
    room: Room;

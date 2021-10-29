@@ -1,5 +1,6 @@
 import { AppContextState, ApiContextState } from './reducer';
-import { User, ReservationResponse } from './data';
+import { User, ReservationResponse, UserCreate } from './data';
+import { ResponseLogin, ResponseRegister } from './response';
 
 export interface AppContextValue extends AppContextState {
    handleSetUser: (user: User) => void;
@@ -8,6 +9,7 @@ export interface AppContextValue extends AppContextState {
 };
 
 export interface ApiContextValue extends ApiContextState {
-   login: (email: string, password: string) => Promise<void>;
+   login: (email: string, password: string) => Promise<ResponseLogin>;
    toggleLoadingApi: () => void;
+   register: (data: UserCreate) => Promise<ResponseRegister>;
 };

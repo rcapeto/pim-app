@@ -24,7 +24,7 @@ export default {
       });
 
       if(hasEmptyField) {
-         return response.status(201).json({ errors, data: '', message: '' });
+         return response.json({ errors, data: '', message: '' });
       }
 
       const {
@@ -45,7 +45,7 @@ export default {
             message: 'E-mail has already using'
          });
 
-         return response.status(400).json({
+         return response.json({
             errors,
             message: 'This e-mail has using already'
          });
@@ -74,13 +74,10 @@ export default {
       try {
          await userRepo.save(user);
 
-         return response.status(201).json({
+         return response.json({
             errors,
             data: {
-               user: {
-                  ...user,
-                  id,
-               }
+               user: renderUser({...user, id }),
             },
             message: 'Create user with success! 😉'
          });
@@ -88,7 +85,7 @@ export default {
          const message = 'error[createUser]';
          showError(error, message);
 
-         return response.status(400).json({ 
+         return response.json({ 
             errors, 
             data: '',
             message, 
@@ -100,7 +97,7 @@ export default {
 
       try {
          const users = await userRepo.find();
-         return response.status(200).json({ 
+         return response.json({ 
             users,
             errors: [],
             message: 'Users find with success! 😉'
@@ -110,7 +107,7 @@ export default {
          const message = 'error[allUsers]';
          showError(error, message);
 
-         return response.status(404).json({ 
+         return response.json({ 
             message, 
             errors: [
                {
@@ -130,21 +127,32 @@ export default {
          });
    
          if(user && user.password === password) {
-            return response.status(200).json({ 
+            return response.json({ 
                user: renderUser(user), 
                errors: [],
                message: 'User find with success! 😉'
+            });
+         }
+
+         if(user && user.password !== password || !user) {
+            return response.json({ 
+               message: 'E-mail or Password incorrect!', 
+               errors: [
+                  {
+                     message: 'E-mail or Password incorrect!'
+                  }
+               ]
             });
          }
       } catch(error) {
          const message = 'error[findUser]';
          showError(error, message);
 
-         return response.status(404).json({ 
+         return response.json({ 
             message, 
             errors: [
                {
-                  message: 'E-mail or Password incorrect!'
+                  message: 'DB Error'
                }
             ]
          });
@@ -164,7 +172,7 @@ export default {
       const userRepo = getRepository(UserModel);
       
       if(!id) {
-         return response.status(401).json({
+         return response.json({
             errors: [
                {
                   message: 'Dont have access'
@@ -206,7 +214,7 @@ export default {
          try {
             await userRepo.update(user, data);
 
-            return response.status(200).json({
+            return response.json({
                errors: [],
                message: 'User updated with success! 😉',
                data: {
@@ -215,7 +223,7 @@ export default {
             });
          } catch(error) {
             showError(error, 'Error[deleteReservation]');
-            return response.status(404).json({
+            return response.json({
                errors: [
                   {
                      message: `Error update user`
@@ -225,7 +233,7 @@ export default {
             }); 
          }
       } else {
-         return response.status(404).json({
+         return response.json({
             errors: [
                {
                   message: `Don't find user`,

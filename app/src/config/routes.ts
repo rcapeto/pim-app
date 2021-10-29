@@ -16,9 +16,14 @@ const reservationsRoutes = {
    }
 };
 
+const roomRoutes = {
+   get: '/rooms'
+}
+
 const routes = {
    user: userRoutes,
-   reservation: reservationsRoutes
+   reservation: reservationsRoutes,
+   room: roomRoutes
 };
 
 const baseURL = 'http://localhost:3333';

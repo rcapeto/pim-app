@@ -12,6 +12,17 @@ export const inputMask = (field: Field, value: string): string => {
    const regexRemoveChar = /\D/g;
 
    switch(field) {
+      case 'birth_date':
+         value = value.replace(regexRemoveChar, '');
+         
+         const birthRegex = /(\d{2})(\d)/;
+
+         value = value.replace(birthRegex, '$1/$2');
+         value = value.replace(birthRegex, '$1/$2');
+
+         if(value.length > 10) value = value.slice(0, -1);
+
+         return value;
       case 'cellphone':
          value = value.replace(regexRemoveChar, '');
          value = value.replace(/(\d{2})(\d)/, '($1)$2');

@@ -37,6 +37,11 @@ const dispatch = (
             ...state,
             signed: action.params.signed
          }
+      case 'TOGGLE_LOADING_APP':
+         return {
+            ...state,
+            loadingApp: !state.loadingApp
+         }
       default: 
          return state;
    }

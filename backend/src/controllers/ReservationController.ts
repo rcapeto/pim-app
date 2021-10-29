@@ -30,7 +30,7 @@ export default {
       });
 
       if(hasEmptyField) {
-         return response.status(201).json({ errors, data: '', message: '' });
+         return response.json({ errors, data: '', message: '' });
       }
 
       const id = createCrypt();
@@ -53,7 +53,7 @@ export default {
             message: 'Has reservation in this room'
          });
 
-         return response.status(400).json({
+         return response.json({
             errors,
             message: 'This room has reservation already'
          });
@@ -70,7 +70,7 @@ export default {
 
       try {
          await reservationRepo.save(reservation);
-         return response.status(201).json({
+         return response.json({
             errors,
             data: {
                reservation: {
@@ -84,7 +84,7 @@ export default {
          const message = 'error[createUser]';
          showError(error, message);
 
-         return response.status(400).json({ 
+         return response.json({ 
             errors, 
             data: '',
             message, 
@@ -95,7 +95,7 @@ export default {
       const { id } = request.params;
 
       if(!id) {
-         return response.status(401).json({
+         return response.json({
             errors: [
                {
                   message: 'Dont have access'
@@ -120,14 +120,14 @@ export default {
          }
       }
 
-      return response.status(200).json({ reservations, id });
+      return response.json({ reservations, id });
    },
    async remove(request: Request, response: Response) {
       const { id } = request.params;
       const reservationRepo = getRepository(ReservationModel);
 
       if(!id) {
-         return response.status(401).json({
+         return response.json({
             errors: [
                {
                   message: 'Dont have access'
@@ -143,13 +143,13 @@ export default {
          try {
             await reservationRepo.delete(reservation);
 
-            return response.status(200).json({
+            return response.json({
                errors: [],
                message: 'Reservation deleted with success! 😉'
             });
          } catch(error) {
             showError(error, 'Error[deleteReservation]');
-            return response.status(404).json({
+            return response.json({
                errors: [
                   {
                      message: `Error delete reservation`
@@ -159,7 +159,7 @@ export default {
             }); 
          }
       } else {
-         return response.status(404).json({
+         return response.json({
             errors: [
                {
                   message: `Don't find reservation`

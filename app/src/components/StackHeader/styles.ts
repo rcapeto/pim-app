@@ -1,17 +1,19 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { colors, fonts } from '../../styles/global';
+import { useDevice } from '../../hooks/useDevice';
 
-const isIOS = Platform.OS === 'ios';
+const { iOS } = useDevice();
 
 const styles = StyleSheet.create({
    container: {
-      height: isIOS ? 130 : '',
+      height: 120,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingHorizontal: 20,
-      backgroundColor: colors.white
+      backgroundColor: colors.white,
+      paddingTop: iOS ? 20 : 10
    },
    buttonBack: {
       alignItems: 'center',
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
       height: '100%',
    },
    logo: {
-      marginTop: isIOS ? 10 : 0
+      marginTop: iOS ? 10 : 0
    },
    title: {
       color: colors.black,
