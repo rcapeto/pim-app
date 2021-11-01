@@ -14,7 +14,6 @@ import {
    Image
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
 import { colors } from '../../styles/global';
@@ -24,6 +23,7 @@ import { useAPI } from '../../contexts/api';
 import { useApp } from '../../contexts/app';
 import { system_name } from '../../config/system';
 import { inputMask } from '../../utils';
+import { ImagePickerComponent } from '../../components/ImagePicker';
 
 const initialFormData = {
    password: '',
@@ -40,26 +40,6 @@ export function Register() {
    const { register, loadingAPI } = useAPI();
    const { handleSetUser } = useApp();
    const { checkFields } = useForm();
-
-   const pickImage = async () => {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-      if(status === 'granted') {
-         const result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            aspect: [4, 3],
-            quality: 1,
-         });
-
-         if(!result.cancelled) {
-            setImage(result.uri);
-         }
-
-      } else {
-         Alert.alert(system_name, 'Precisamos da sua permissão 😭')
-      }
-   };
 
    const handleRegister = async () => {
       const { hasEmptyFields, message } = checkFields(formData);
@@ -112,34 +92,11 @@ export function Register() {
                >
                   <Text style={styles.title}>Registro</Text>
 
-                  <View style={styles.selectImageContainer}>
-                     <View style={styles.selectImage}>
-                        <TouchableOpacity style={styles.buttonSelectImage} onPress={pickImage}>
-                           {
-                              image ? (
-                                 <Image 
-                                    source={{ uri: image }}
-                                    style={styles.image}
-                                 />
-                              ) : (
-                                    <Feather 
-                                       color={colors.gray}
-                                       name="user"
-                                       size={24}
-                                    />
-                              )
-                           }
-                        </TouchableOpacity>
-                        <View style={styles.plus}> 
-                           <Feather 
-                              size={22}
-                              name="plus"
-                              color={colors.white}
-                           />
-                        </View>
-                     </View>
-                  </View>
-
+                  <ImagePickerComponent
+                     image={image}
+                     updateImageValue={setImage}
+                  />
+                  
                   <View style={styles.form}>
                      <View style={styles.singleInput}>
                         <CustomInput 

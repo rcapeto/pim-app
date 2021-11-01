@@ -28,7 +28,7 @@ export function Login() {
 
    const { login, loadingAPI } = useAPI();
    const { handleSetUser } = useApp();
-   const { checkFields  } = useForm();
+   const { checkFields } = useForm();
    const navigation = useNavigation();
 
    const handleNavigateToRegister = () => {

@@ -2,7 +2,7 @@ import React, { createContext, useContext, FunctionComponent } from 'react';
 
 import { ApiContextValue } from '../@types/context';
 import { useApiReducer } from '../hooks/useApiReducer';
-import { UserCreate } from '../@types/data';
+import { UserCreate, CreateReservation } from '../@types/data';
 import { routes } from '../config/routes';
 import { api } from '../config/api';
 
@@ -75,13 +75,70 @@ export const ApiContextProvider: FunctionComponent = ({
       }
    };
 
+   const getRooms = async () => {
+      toggleLoadingApi();
+
+      try {
+         const { data } = await api.get(routes.room.get);
+         return data;
+      } catch(error) {
+         console.error(error);
+         return {
+            message: 'Error[getRooms]',
+            errors: [],
+            rooms: []
+         }
+      } finally {
+         toggleLoadingApi();
+      }
+   };
+
+   const createReservation = async (reservationInfo: CreateReservation) => {
+      toggleLoadingApi();
+
+      try {
+         const { data } = await api.post(routes.reservation.create, reservationInfo);
+         return data;
+
+      } catch(error) {
+         console.error(error);
+         return {
+            message: 'Error[createReservation]',
+            errors: [],
+         }
+      } finally {
+         toggleLoadingApi();
+      }
+   };
+
+   const getReservations = async (user_id: string) => {
+      toggleLoadingApi();
+
+      try {
+         const { data } = await api.get(routes.reservation.get(user_id));
+         return data;
+
+      } catch(error) {
+         console.error(error);
+         return {
+            message: 'Error[getRooms]',
+            errors: [],
+         }
+      } finally {
+         toggleLoadingApi();
+      }
+   };
+
    return(
       <ApiContext.Provider
          value={{
             ...apiState,
             toggleLoadingApi,
             login,
-            register
+            register,
+            getRooms,
+            createReservation,
+            getReservations
          }}
       >
          { children }

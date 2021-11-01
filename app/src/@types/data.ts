@@ -23,6 +23,8 @@ export interface Reservation {
    user_id: string;
 };
 
+export type CreateReservation = Omit<Reservation, 'id'>;
+
 export interface User {
    password: string;
    cellphone: string;

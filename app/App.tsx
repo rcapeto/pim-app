@@ -22,11 +22,11 @@ export default function App() {
    if(!fontsLoaded) return <AppLoading />
 
    return(
-      <AppContextProvider>
-         <ApiContextProvider>
+      <ApiContextProvider>
+         <AppContextProvider>
             <StatusBar backgroundColor="#000" style="dark"/>
             <Routes />
-         </ApiContextProvider>
-      </AppContextProvider>
+         </AppContextProvider>
+      </ApiContextProvider>
    );
 }

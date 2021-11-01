@@ -78,10 +78,10 @@ export default {
                   id,
                }
             },
-            message: 'Reservation user with success! 😉'
+            message: 'Reservation created with success! 😉'
          });
       } catch(error) {
-         const message = 'error[createUser]';
+         const message = 'error[createReservation]';
          showError(error, message);
 
          return response.json({ 

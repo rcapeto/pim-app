@@ -8,8 +8,12 @@ const { iOS } = useDevice();
 const styles = StyleSheet.create({
    container: {
       flex: 1,
+   },
+   header: {
+      height: iOS ? 140 : 100,
+      justifyContent: 'center',
       alignItems: 'center',
-      justifyContent: 'center'
+      backgroundColor: colors.white
    }
 });
 

@@ -135,8 +135,6 @@ export default {
             });
          }
 
-         console.log(user);
-
          if(user && user.password !== password || !user) {
             return response.json({ 
                message: 'E-mail or Password incorrect!', 

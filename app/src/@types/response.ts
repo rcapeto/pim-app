@@ -1,4 +1,4 @@
-import { UserDB } from './data';
+import { Reservation, UserDB, ReservationResponse } from './data';
 
 export interface ResponseLogin {
    user: UserDB | null;
@@ -13,3 +13,23 @@ export interface ResponseRegister {
    message: string;
    errors: []
 }
+
+export interface ResponseRooms {
+   errors: [],
+   message: '',
+   rooms: []
+}
+
+export interface CreateReservationResponse {
+   errors: [];
+   message: string;
+   data?: {
+      reservation: Reservation
+   }
+};
+
+export interface ReservationsResponse {
+   errors: [];
+   message: string;
+   reservations?: ReservationResponse[]
+};

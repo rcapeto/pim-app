@@ -26,7 +26,7 @@ const checkFields = (fields: Fields) => {
    let hasEmptyFields = false;
    const emptyFields: EmptyFields[] = [];
 
-   Object.keys(fields).forEach(field => {
+   Object.getOwnPropertyNames(fields).forEach(field => {
       if(!fields[field] || !fields[field].trim()) {
          hasEmptyFields = true;
          emptyFields.push({ field });

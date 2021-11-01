@@ -5,6 +5,7 @@ import { AppContextValue } from '../@types/context';
 import { useAppReducer } from '../hooks/useReducer';
 import { User, ReservationResponse } from '../@types/data';
 import { asyncStorageConfig } from '../config/system';
+import { useAPI } from './api';
 
 const AppContext = createContext({} as AppContextValue);
 
@@ -12,6 +13,8 @@ export const AppContextProvider: FunctionComponent = ({
    children
 }) => {
    const [appState, dispatchApp] = useAppReducer();
+
+   const { getReservations } = useAPI();
 
    const handleSetUser = async (user: User) => {
       dispatchApp({
@@ -56,7 +59,15 @@ export const AppContextProvider: FunctionComponent = ({
       dispatchApp({ type: 'TOGGLE_LOADING_APP'});
 
       const user = await getUserInDeviceStorage();
-      user && handleSetUser(user);
+      if(user) {
+         handleSetUser(user);
+
+         const data = await getReservations(user.id);
+
+         if(data.reservations) {
+            handleSetReservations(data.reservations);
+         }
+      }
 
       dispatchApp({ type: 'TOGGLE_LOADING_APP'});
    };

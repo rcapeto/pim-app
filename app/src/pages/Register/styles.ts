@@ -16,46 +16,6 @@ const styles = StyleSheet.create({
       fontFamily: fonts.regular,
       fontSize: 24
    },
-   selectImageContainer: {
-      width: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 20
-   },
-   selectImage: {
-      width: '60%',
-      position: 'relative',
-      alignItems: 'center',
-      justifyContent: 'center'
-   },
-   buttonSelectImage: {
-      width: 140,
-      borderRadius: 70,
-      height: 140,
-      borderStyle: 'dashed',
-      borderWidth: 1,
-      borderColor: colors.gray,
-      alignItems: 'center',
-      justifyContent: 'center'
-   },
-   image: {
-      width: '100%',
-      height: '100%',
-      borderRadius: 70
-   },
-   plus: {
-      width: 30,
-      borderWidth: 2,
-      borderColor: colors.white,
-      height: 30,
-      borderRadius: 15,
-      backgroundColor: colors.black,
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'absolute',
-      top: 10,
-      right: 30 
-   },
    form: {
       marginTop: 30
    },
