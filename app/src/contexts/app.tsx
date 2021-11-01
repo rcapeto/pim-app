@@ -14,7 +14,7 @@ export const AppContextProvider: FunctionComponent = ({
 }) => {
    const [appState, dispatchApp] = useAppReducer();
 
-   const { getReservations } = useAPI();
+   const { getReservations, handleRemoveReservation } = useAPI();
 
    const handleSetUser = async (user: User) => {
       dispatchApp({
@@ -61,15 +61,44 @@ export const AppContextProvider: FunctionComponent = ({
       const user = await getUserInDeviceStorage();
       if(user) {
          handleSetUser(user);
+         handleGetReservations();
+      }
 
-         const data = await getReservations(user.id);
+      dispatchApp({ type: 'TOGGLE_LOADING_APP'});
+   };
+
+   const removeReservation = async (reservation_id: string) => {
+      try {
+         const data = await handleRemoveReservation(reservation_id);
+
+         if(!data.errors.length) {
+            dispatchApp({
+               type: 'DELETE_RESERVATION',
+               params: {
+                  id: reservation_id
+               }
+            });
+         }
+      } catch(error) {
+         console.error({
+            error,
+            message: 'Erro ao deletar reserva'
+         });
+      }
+   };
+
+   const handleGetReservations = async () => {
+      const { user } = appState;
+
+      if(user.profile) {
+         const { id } = user.profile;
+
+         const data = await getReservations(id);
 
          if(data.reservations) {
             handleSetReservations(data.reservations);
          }
       }
-
-      dispatchApp({ type: 'TOGGLE_LOADING_APP'});
    };
 
    useEffect(() => {
@@ -82,7 +111,9 @@ export const AppContextProvider: FunctionComponent = ({
             ...appState,
             handleSetReservations,
             handleSetSigned,
-            handleSetUser
+            handleSetUser,
+            removeReservation,
+            handleGetReservations
          }}
       >
          { children }

@@ -129,6 +129,23 @@ export const ApiContextProvider: FunctionComponent = ({
       }
    };
 
+   const handleRemoveReservation = async (id: string) => {
+      toggleLoadingApi();
+
+      try {
+         const { data } = await api.delete(routes.reservation.delete(id));
+         return data;
+      } catch(error) {
+         console.error(error);
+         return {
+            message: 'Error[removeReservation]',
+            errors : []
+         }
+      } finally {
+         toggleLoadingApi();
+      }
+   };
+
    return(
       <ApiContext.Provider
          value={{
@@ -138,7 +155,8 @@ export const ApiContextProvider: FunctionComponent = ({
             register,
             getRooms,
             createReservation,
-            getReservations
+            getReservations,
+            handleRemoveReservation
          }}
       >
          { children }

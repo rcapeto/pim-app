@@ -8,9 +8,23 @@ const { iOS } = useDevice();
 const styles = StyleSheet.create({
    container: {
       flex: 1,
-      justifyContent: 'center',
+      padding: 20,
+      marginTop: iOS ? 80 : 10
+   },
+   header: {
+      flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.white
+      justifyContent: 'space-between'
+   },
+   title: {
+      fontFamily: fonts.bold,
+      fontSize: 20,
+      color: colors.gray
+   },
+   reservations: {
+      fontSize: 12,
+      color: colors.gray,
+      fontFamily: fonts.medium
    },
 });
 

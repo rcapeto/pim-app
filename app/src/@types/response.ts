@@ -33,3 +33,8 @@ export interface ReservationsResponse {
    message: string;
    reservations?: ReservationResponse[]
 };
+
+export interface ResponseDeleteReservation {
+   errors: [],
+   message: string;
+};

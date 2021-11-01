@@ -14,7 +14,7 @@ const appState: AppContextState = {
 const dispatch = (
    state: AppContextState, 
    action: ActionsApp
-) => {
+): AppContextState => {
    switch(action.type) {
       case 'SET_USER':
          return {
@@ -42,6 +42,24 @@ const dispatch = (
             ...state,
             loadingApp: !state.loadingApp
          }
+      case 'DELETE_RESERVATION':
+         const { id } = action.params;
+
+         const index = state.user.reservations.findIndex(
+            ({ reservation }) => reservation.id == id 
+         )
+
+         index >= 0 && 
+         state.user.reservations.splice(index, 1);
+
+         return {
+            ...state,
+            user: {
+               ...state.user,
+               reservations: state.user.reservations
+            }
+         }
+         
       default: 
          return state;
    }

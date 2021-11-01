@@ -17,6 +17,7 @@ export type ActionsApp =
    { type: 'SET_USER', params: { profile: User } } |
    { type: 'SET_RESERVATIONS', params: { reservations: ReservationResponse[] } } |
    { type: 'SET_SIGNED', params: { signed: boolean }} | 
-   { type: 'TOGGLE_LOADING_APP' } 
+   { type: 'TOGGLE_LOADING_APP' } |
+   { type: 'DELETE_RESERVATION', params: { id: string }}
 
 export type ActionsApi = { type: 'TOGGLE_LOADING_API' };

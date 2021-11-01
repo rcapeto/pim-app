@@ -1,11 +1,20 @@
 import { AppContextState, ApiContextState } from './reducer';
 import { User, ReservationResponse, UserCreate, CreateReservation } from './data';
-import { ResponseLogin, ResponseRegister, ResponseRooms, CreateReservationResponse, ReservationsResponse } from './response';
+import { 
+   ResponseLogin, 
+   ResponseRegister, 
+   ResponseRooms, 
+   CreateReservationResponse, 
+   ReservationsResponse,
+   ResponseDeleteReservation 
+} from './response';
 
 export interface AppContextValue extends AppContextState {
    handleSetUser: (user: User) => void;
    handleSetReservations: (reservations: ReservationResponse[]) => void;
    handleSetSigned: (signed: boolean) => void;
+   removeReservation: (reservation_id: string) => Promise<void>;
+   handleGetReservations: () => Promise<void>;
 };
 
 export interface ApiContextValue extends ApiContextState {
@@ -15,4 +24,5 @@ export interface ApiContextValue extends ApiContextState {
    getRooms: () => Promise<ResponseRooms>;
    createReservation: (data: CreateReservation) => Promise<CreateReservationResponse>;
    getReservations: (user_id: string) => Promise<ReservationsResponse>;
+   handleRemoveReservation: (id: string) => Promise<ResponseDeleteReservation>;
 };

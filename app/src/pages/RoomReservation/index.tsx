@@ -21,8 +21,8 @@ const initialFormData = {
 };
 
 export const RoomReservation = () => {
-   const { user } = useApp();
-   const { createReservation, loadingAPI } = useAPI();
+   const { user, handleSetReservations } = useApp();
+   const { createReservation, loadingAPI, getReservations } = useAPI();
    const { params } = useRoute();
    const { checkFields } = useForm();
    const { goBack } = useNavigation();
@@ -63,6 +63,12 @@ export const RoomReservation = () => {
                Alert.alert(system_name, 'Reserva criada com sucesso!', [
                   { text: '😉', onPress: goBack, style: 'default'}
                ]);
+
+               const data = await getReservations(user.profile.id);
+
+               if(data.reservations) {
+                  handleSetReservations(data.reservations);
+               }
             } else {
                Alert.alert(system_name, response.message);
             }
