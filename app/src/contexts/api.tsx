@@ -2,7 +2,7 @@ import React, { createContext, useContext, FunctionComponent } from 'react';
 
 import { ApiContextValue } from '../@types/context';
 import { useApiReducer } from '../hooks/useApiReducer';
-import { UserCreate, CreateReservation } from '../@types/data';
+import { UserCreate, CreateReservation, User } from '../@types/data';
 import { routes } from '../config/routes';
 import { api } from '../config/api';
 
@@ -146,6 +146,41 @@ export const ApiContextProvider: FunctionComponent = ({
       }
    };
 
+   const updateUser = async (user_id: string, userDB: UserCreate) => {
+      toggleLoadingApi();
+
+      const formData = new FormData();
+
+      for(const [key, value] of Object.entries(userDB)) {
+         if(!(key == 'image')) {
+            formData.append(key, String(value));
+         } else {
+            if(value) {
+               formData.append('image', {
+                  name: `image_${Date.now()}.jpg`,
+                  type: 'image/jpg',
+                  uri: value
+               } as any);
+            }
+         }
+      }
+
+      try {
+         const { data } = await api.put(routes.user.update(user_id), formData);
+         console.log(data);
+         return data;
+      } catch(error) {
+         console.error(error);
+         return {
+            message: 'Error[UpdateUser]',
+            user: null,
+            errors: []
+         }
+      } finally {
+         toggleLoadingApi();
+      }
+   };
+
    return(
       <ApiContext.Provider
          value={{
@@ -156,7 +191,8 @@ export const ApiContextProvider: FunctionComponent = ({
             getRooms,
             createReservation,
             getReservations,
-            handleRemoveReservation
+            handleRemoveReservation,
+            updateUser
          }}
       >
          { children }

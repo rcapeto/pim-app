@@ -16,14 +16,14 @@ export const AppContextProvider: FunctionComponent = ({
 
    const { getReservations, handleRemoveReservation } = useAPI();
 
-   const handleSetUser = async (user: User) => {
+   const handleSetUser = async (user: User | null) => {
       dispatchApp({
          type: 'SET_USER',
          params: {
             profile: user
          }
       });
-      await setUserInDeviceStorage(user);
+      user && await setUserInDeviceStorage(user);
       handleSetSigned(!!user);
    };
 
@@ -101,6 +101,12 @@ export const AppContextProvider: FunctionComponent = ({
       }
    };
 
+   const logout = async () => {
+      const { user: userLocation } = asyncStorageConfig;
+      await AsyncStorage.removeItem(userLocation);
+      await handleSetUser(null);
+   };
+
    useEffect(() => {
       initializeApp();
    }, []);
@@ -113,7 +119,8 @@ export const AppContextProvider: FunctionComponent = ({
             handleSetSigned,
             handleSetUser,
             removeReservation,
-            handleGetReservations
+            handleGetReservations,
+            logout
          }}
       >
          { children }

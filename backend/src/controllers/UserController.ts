@@ -219,7 +219,7 @@ export default {
                errors: [],
                message: 'User updated with success! 😉',
                data: {
-                  user
+                  user: renderUser({...user, id }),
                }
             });
          } catch(error) {

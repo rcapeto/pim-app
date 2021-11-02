@@ -26,12 +26,13 @@ const checkFields = (fields: Fields) => {
    let hasEmptyFields = false;
    const emptyFields: EmptyFields[] = [];
 
-   Object.getOwnPropertyNames(fields).forEach(field => {
+   for(const field of Object.getOwnPropertyNames(fields)) {
+      if(field == 'credit_card') continue;
       if(!fields[field] || !fields[field].trim()) {
          hasEmptyFields = true;
          emptyFields.push({ field });
       }
-   });
+   }
 
    const { message } = generateMessageError(emptyFields);
 

@@ -10,11 +10,12 @@ import {
 } from './response';
 
 export interface AppContextValue extends AppContextState {
-   handleSetUser: (user: User) => void;
+   handleSetUser: (user: User | null) => void;
    handleSetReservations: (reservations: ReservationResponse[]) => void;
    handleSetSigned: (signed: boolean) => void;
    removeReservation: (reservation_id: string) => Promise<void>;
    handleGetReservations: () => Promise<void>;
+   logout: () => Promise<void>;
 };
 
 export interface ApiContextValue extends ApiContextState {
@@ -25,4 +26,5 @@ export interface ApiContextValue extends ApiContextState {
    createReservation: (data: CreateReservation) => Promise<CreateReservationResponse>;
    getReservations: (user_id: string) => Promise<ReservationsResponse>;
    handleRemoveReservation: (id: string) => Promise<ResponseDeleteReservation>;
+   updateUser: (user_id: string, data: UserCreate) => Promise<ResponseRegister>;
 };

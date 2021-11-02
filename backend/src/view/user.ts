@@ -3,11 +3,11 @@ import { base_url } from '../config/server';
 
 export const renderUser = (user: UserDB): UserDB => {
    const { 
-      name, cpf, email, birth_date, cellphone, credit_card, id, image
+      name, cpf, email, birth_date, cellphone, credit_card, id, image, password
    } = user;
 
    return {
-      password: '',
+      password,
       email,
       name,
       cpf,

@@ -6,6 +6,7 @@ import { MyReservations } from '../../pages/MyReservations';
 import { Profile } from '../../pages/Profile';
 
 import { BottomTab } from '../../components/BottomTab';
+import { BottomHeader } from '../../components/BottomHeader';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -13,7 +14,7 @@ export function TabRoutes() {
    return(
       <Navigator
          screenOptions={{
-            headerShown: false,
+            header: () => <BottomHeader />
          }}
          tabBar={props => <BottomTab {...props}/>}
       >

@@ -46,19 +46,21 @@ export const inputMask = (field: Field, value: string): string => {
       case 'credit_card_date': 
          const regexCreditCardDate = /(\d{2})(\d)/;
          const regexCreditCardDateString = '$1/$2';
-
+         if(value.length > 5) value = value.slice(0, -1);
          value = value.replace(regexCreditCardDate, regexCreditCardDateString);
-
-         if(value.length > 4) value = value.slice(0, -1);
-
          return value;
       case 'credit_card':
          const regexCreditCard = /(\d{4})(\d)/;
          const regexCreditCardString = '$1.$2';
 
+         if(value.length > 19) value = value.slice(0, -1);
+
          value = value.replace(regexCreditCard, regexCreditCardString);
          
-         if(value.length > 18) value = value.slice(0, -1);
+         return value;
+      case 'cvv':
+         value = value.replace(regexRemoveChar, '');
+         if(value.length > 3) value = value.slice(0, -1);
          return value;
       default:
          return value;

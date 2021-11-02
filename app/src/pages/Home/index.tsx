@@ -5,7 +5,6 @@ import { useAPI } from '../../contexts/api';
 import { RoomComponent } from './components/Room';
 import { Room } from '../../@types/data';
 import styles from './styles';
-import logo from '../../assets/logo.png';
 
 export function Home() {
    const [rooms, setRooms] = useState<Room[]>([]);
@@ -23,12 +22,6 @@ export function Home() {
 
    return(
       <View style={styles.container}>
-         <View style={styles.header}>
-            <Image 
-               source={logo}
-            />
-         </View>
-
          <FlatList 
             data={rooms}
             contentContainerStyle={{
