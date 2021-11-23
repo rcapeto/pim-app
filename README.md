@@ -50,4 +50,4 @@ Lembrando que você precisa ter uma conta no [Figma](http://figma.com/).
 - Arthur Rosa RA: N555DG0
 - Herbert Mesquita RA: N640561
 
-Feito com 💜 by HAR Hotel.
+Feito com 🖤 by HAR Hotel.
