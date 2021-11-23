@@ -1,3 +1,8 @@
+## 📜 Requisitos
+- Expo instalado na máquina;
+- Node instalado na máquina;
+- Gerenciador de pacotes instalado na máquina (npm/yarn);
+
 ## 🧪 Tecnologias
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
@@ -41,8 +46,8 @@ Você pode visualizar o layout do projeto através do link abaixo:
 Lembrando que você precisa ter uma conta no [Figma](http://figma.com/).
 
 ## 👨🏻‍💻 Integrantes
-- Raphael Capeto
-- Arthur Rosa
-- Herbert 
+- Raphael Capeto RA: F1754D3
+- Arthur Rosa RA: N555DG0
+- Herbert Mesquita RA: N640561
 
-Feito com 💜 by Raphael Capeto
+Feito com 💜 by HAR Hotel.
