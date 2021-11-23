@@ -167,7 +167,6 @@ export const ApiContextProvider: FunctionComponent = ({
 
       try {
          const { data } = await api.put(routes.user.update(user_id), formData);
-         console.log(data);
          return data;
       } catch(error) {
          console.error(error);

@@ -61,7 +61,7 @@ export const AppContextProvider: FunctionComponent = ({
       const user = await getUserInDeviceStorage();
       if(user) {
          handleSetUser(user);
-         handleGetReservations();
+         handleGetReservations(user.id);
       }
 
       dispatchApp({ type: 'TOGGLE_LOADING_APP'});
@@ -87,16 +87,24 @@ export const AppContextProvider: FunctionComponent = ({
       }
    };
 
-   const handleGetReservations = async () => {
-      const { user } = appState;
-
-      if(user.profile) {
-         const { id } = user.profile;
-
-         const data = await getReservations(id);
-
+   const handleGetReservations = async (userId?: string) => {
+      if(userId) {
+         const data = await getReservations(userId);
+   
          if(data.reservations) {
             handleSetReservations(data.reservations);
+         }
+      } else {
+         const { user } = appState;
+
+         if(user.profile) {
+            const { id } = user.profile;
+   
+            const data = await getReservations(id);
+   
+            if(data.reservations) {
+               handleSetReservations(data.reservations);
+            }
          }
       }
    };
@@ -110,6 +118,10 @@ export const AppContextProvider: FunctionComponent = ({
    useEffect(() => {
       initializeApp();
    }, []);
+
+   useEffect(() => {
+      console.log('update', appState.user.reservations)
+   }, [appState.user.reservations])
 
    return(
       <AppContext.Provider
